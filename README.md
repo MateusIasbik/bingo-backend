@@ -29,3 +29,5 @@ Sistema para a administração de jogos de bingo.
   - Instalar as dependências com o `npm i`;
   - Criar o arquivo `.env` com base no exemplo do `.env.example`;
   - Executar o comando `npm run test`. 
+
+  
