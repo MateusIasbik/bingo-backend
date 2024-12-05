@@ -7,7 +7,7 @@ on:
 
 jobs:
   CI-ContinuousIntegration:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
 
   CD-DeployToRender:
     name: Deploy to Render
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     needs: CI-ContinuousIntegration
     steps:
       - name: Checkout Repository
@@ -46,7 +46,7 @@ jobs:
 
   CD-PublishToDockerHub:
     name: Build and Push Docker Image
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     needs: CI-ContinuousIntegration
     steps:
       - name: Checkout code
