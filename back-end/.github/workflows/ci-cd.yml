@@ -7,7 +7,7 @@ on:
 
 jobs:
   CI-ContinuousIntegration:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -18,19 +18,22 @@ jobs:
           echo "POSTGRES_USER=postgres" >> .env.test
           echo "POSTGRES_DB=tests" >> .env.test
           echo "DATABASE_URL=postgres://postgres:postgres@postgres:5432/tests" >> .env.test
-      - name: Set up Docker Compose
+      - name: Set up Docker and Docker Compose
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+          sudo apt-get update -y
+          sudo apt-get install -y docker.io docker-compose
+          docker --version
           docker-compose --version
       - name: Run Prisma Migrate
-        run: docker-compose -f docker-compose-test.yml run backend npx prisma migrate deploy
+        run: |
+          docker-compose -f docker-compose-test.yml run backend npx prisma migrate deploy
       - name: Run tests
-        run: docker-compose -f docker-compose-test.yml run backend npm run test:ci
+        run: |
+          docker-compose -f docker-compose-test.yml run backend npm run test:ci
 
   CD-DeployToRender:
     name: Deploy to Render
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: CI-ContinuousIntegration
     steps:
       - name: Checkout Repository
@@ -43,7 +46,7 @@ jobs:
 
   CD-PublishToDockerHub:
     name: Build and Push Docker Image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: CI-ContinuousIntegration
     steps:
       - name: Checkout code
