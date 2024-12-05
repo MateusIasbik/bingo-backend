@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: tests
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+    networks:
+      - mynetwork
+  backend:
+    image: daily-kindness-backend
+    container_name: daily-kindness-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    env_file:
+      - .env.test
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mynetwork
