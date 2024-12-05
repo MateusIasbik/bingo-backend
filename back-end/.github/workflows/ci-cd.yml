@@ -1,8 +1,10 @@
 name: Pipeline Automatizado
+
 on:
   push:
     branches:
       - main
+
 jobs:
   CI-ContinuousIntegration:
     runs-on: ubuntu-latest
