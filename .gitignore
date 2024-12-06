@@ -132,3 +132,5 @@ dist
 
 # mac
 .DS_Store
+
+echo "front-end/" >> .gitignore
