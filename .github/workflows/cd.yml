@@ -20,6 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
+        working-directory: ./front-end
         uses: docker/build-push-action@v5
         with:
           context: ./front-end
@@ -34,14 +35,17 @@ jobs:
         with:
           node-version: "22"
       - name: Install dependencies
+        working-directory: ./front-end
         run: npm install
       - name: Build the project
+        working-directory: ./front-end
         run: npm run build
       - name: Deploy to Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./front-end
         run: |
           echo "Deploying to Vercel..."
           npx vercel --prod --token $VERCEL_TOKEN
