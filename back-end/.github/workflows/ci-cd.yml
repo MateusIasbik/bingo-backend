@@ -21,5 +21,5 @@ jobs:
           file_name: .env.test
       - name: Run tests
         run: docker compose -f docker-compose-test.yml run backend npm run test:ci
-      - name: Build Docker image 
-        run: docker build -t your-dockerhub-username/backend -f back-end/Dockerfile back-end
+      - name: Build Docker image
+        run: docker build -t your-dockerhub-mateusiasbik/backend -f back-end/Dockerfile back-end
