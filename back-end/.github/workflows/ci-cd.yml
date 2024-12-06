@@ -27,7 +27,7 @@ jobs:
         working-directory: .
         run: |
           docker compose -f ../docker-compose-test.yml run backend npm run test:ci
-          
+
   CD-DeployToRender:
     name: Deploy to Render
     runs-on: ubuntu-latest
@@ -59,4 +59,3 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/bingo-backimage:latest
-

@@ -49,3 +49,4 @@ jobs:
         run: |
           echo "Deploying to Vercel..."
           npx vercel --prod --token $VERCEL_TOKEN
+          
