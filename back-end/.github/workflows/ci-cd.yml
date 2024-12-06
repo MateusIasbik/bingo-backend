@@ -59,3 +59,4 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/bingo-backimage:latest
+          
