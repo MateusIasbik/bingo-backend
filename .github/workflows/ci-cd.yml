@@ -1,0 +1,32 @@
+name: CI Back-End
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  CI-ContinuousIntegration:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout do repositório
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Criação do arquivo .env.test
+      - name: Create .env.test file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_PORT: 5000
+          envkey_POSTGRES_PASSWORD: "postgres"
+          envkey_POSTGRES_USER: "postgres"
+          envkey_POSTGRES_DB: "tests"
+          envkey_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/tests"
+          directory: back-end
+          file_name: .env.test
+
+      # Configuração do Docker Compose para testes
+      - name: Run Tests
+        working-directory: back-end
+        run: |
+          docker compose -f ../docker-compose-test.yml run backend npm run test:ci
