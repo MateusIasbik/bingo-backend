@@ -24,7 +24,7 @@ jobs:
           file_name: .env.test
 
       - name: Run Tests
-        working-directory: ./back-end
+        working-directory: ./
         run: |
           docker compose -f ../docker-compose-test.yml run backend npm run test:ci
 
